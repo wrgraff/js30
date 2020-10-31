@@ -17,7 +17,7 @@
 
     <style>
         html {
-            background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+            background: #018DED url(https://unsplash.it/1500/1000?image=1037&blur=5);
             background-size: cover;
             font-family: 'helvetica neue';
             text-align: center;
@@ -95,6 +95,12 @@
             const hours = 360 * date.getHours() / 12;
             const minutes = 360 * date.getMinutes() / 60;
             const seconds = 360 * date.getSeconds() / 60;
+
+            if (seconds === 0) {
+                secondHand.style.transition = 'none';
+            } else if (secondHand.hasAttribute('style')) {
+                secondHand.removeAttribute('style');
+            };
 
             hourHand.style.transform = `rotate(${hours + (minutes / 12)}deg)`;
             minuteHand.style.transform = `rotate(${minutes + (seconds / 60)}deg)`;
