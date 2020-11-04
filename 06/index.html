@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const cities = [];
+  const input = document.querySelector('.search');
+  const list = document.querySelector('.suggestions');
+
+  input.addEventListener('input', onCitiesSearch);
+
+  fetch(endpoint)
+    .then((response) => response.json())
+    .then((data) => {
+      cities.push(...data);
+    })
+    .catch((error) => {
+      console.log('Something went wrong', error);
+    });
+
+  function onCitiesSearch(evt) {
+    const term = evt.target.value;
+    const matches = searchMatches(term.toLowerCase(), cities)
+
+    list.innerHTML = matches
+      .map(({city, state, population}) => (`
+        <li>
+          <span class="name">${highlightText(city, term)}, ${highlightText(state, term)}</span>
+          <span class="population">${formatNumber(population)}</span>
+        </li>
+      `)).join('');
+  };
+
+  function searchMatches(term, cities) {
+    return cities.filter(({city, state}) => {
+      return city.toLowerCase().includes(term) || state.toLowerCase().includes(term);
+    })
+  };
+
+  function highlightText(text, match) {
+    const regex = new RegExp(match, 'gi');
+    return text.replace(regex, `<span class="hl">${match}</span>`);
+  };
+
+  function formatNumber(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  };
+</script>
+</body>
+</html>
