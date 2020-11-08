@@ -96,6 +96,24 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('.item input');
+  let lastCheckboxId = null;
+
+  checkboxes.forEach((checkbox, index) => {
+    checkbox.addEventListener('click', evt => onCheckboxChange(evt, index))
+  });
+
+  function onCheckboxChange(evt, checkboxId) {
+    if (evt.shiftKey) {
+      const ids = [lastCheckboxId, checkboxId].sort();
+      const checkboxesToCheck = [...checkboxes].slice(ids[0], ids[1]);
+
+      for (let input of checkboxesToCheck) {
+        input.checked = true;
+      }
+    };
+    lastCheckboxId = checkboxId;
+  };
 </script>
 </body>
 </html>
