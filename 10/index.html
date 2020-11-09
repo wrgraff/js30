@@ -96,47 +96,47 @@
   </div>
 
 <script>
-  // const checkboxes = document.querySelectorAll('.item input');
-  // let lastCheckboxId = null;
-
-  // checkboxes.forEach((checkbox, index) => {
-  //   checkbox.addEventListener('click', evt => onCheckboxChange(evt, index))
-  // });
-
-  // function onCheckboxChange(evt, checkboxId) {
-  //   if (evt.shiftKey) {
-  //     const ids = [lastCheckboxId, checkboxId].sort();
-  //     const checkboxesToCheck = [...checkboxes].slice(ids[0], ids[1]);
-
-  //     for (let input of checkboxesToCheck) {
-  //       input.checked = true;
-  //     }
-  //   };
-  //   lastCheckboxId = checkboxId;
-  // };
-
   const checkboxes = document.querySelectorAll('.item input');
-  let lastCheckbox;
-  let isInRange = false;
+  let lastCheckboxId = null;
 
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('click', onCheckboxChange)
+  checkboxes.forEach((checkbox, index) => {
+    checkbox.addEventListener('click', evt => onCheckboxChange(evt, index))
   });
 
-  function onCheckboxChange(evt) {
+  function onCheckboxChange(evt, checkboxId) {
     if (evt.shiftKey) {
-      for (let checkbox of checkboxes) {
-        if (checkbox === this || checkbox === lastCheckbox) {
-          isInRange = !isInRange;
-        };
+      const ids = [lastCheckboxId, checkboxId].sort();
+      const checkboxesToCheck = [...checkboxes].slice(ids[0], ids[1]);
 
-        if (isInRange) {
-          checkbox.checked = true;
-        };
+      for (let input of checkboxesToCheck) {
+        input.checked = true;
       };
     };
-    lastCheckbox = this;
+    lastCheckboxId = checkboxId;
   };
+
+  // const checkboxes = document.querySelectorAll('.item input');
+  // let lastCheckbox;
+  // let isInRange = false;
+
+  // checkboxes.forEach(checkbox => {
+  //   checkbox.addEventListener('click', onCheckboxChange)
+  // });
+
+  // function onCheckboxChange(evt) {
+  //   if (evt.shiftKey) {
+  //     for (let checkbox of checkboxes) {
+  //       if (checkbox === this || checkbox === lastCheckbox) {
+  //         isInRange = !isInRange;
+  //       };
+
+  //       if (isInRange) {
+  //         checkbox.checked = true;
+  //       };
+  //     };
+  //   };
+  //   lastCheckbox = this;
+  // };
 
 </script>
 </body>
