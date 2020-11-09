@@ -96,24 +96,48 @@
   </div>
 
 <script>
-  const checkboxes = document.querySelectorAll('.item input');
-  let lastCheckboxId = null;
+  // const checkboxes = document.querySelectorAll('.item input');
+  // let lastCheckboxId = null;
 
-  checkboxes.forEach((checkbox, index) => {
-    checkbox.addEventListener('click', evt => onCheckboxChange(evt, index))
+  // checkboxes.forEach((checkbox, index) => {
+  //   checkbox.addEventListener('click', evt => onCheckboxChange(evt, index))
+  // });
+
+  // function onCheckboxChange(evt, checkboxId) {
+  //   if (evt.shiftKey) {
+  //     const ids = [lastCheckboxId, checkboxId].sort();
+  //     const checkboxesToCheck = [...checkboxes].slice(ids[0], ids[1]);
+
+  //     for (let input of checkboxesToCheck) {
+  //       input.checked = true;
+  //     }
+  //   };
+  //   lastCheckboxId = checkboxId;
+  // };
+
+  const checkboxes = document.querySelectorAll('.item input');
+  let lastCheckbox;
+  let isInRange = false;
+
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', onCheckboxChange)
   });
 
-  function onCheckboxChange(evt, checkboxId) {
+  function onCheckboxChange(evt) {
     if (evt.shiftKey) {
-      const ids = [lastCheckboxId, checkboxId].sort();
-      const checkboxesToCheck = [...checkboxes].slice(ids[0], ids[1]);
+      for (let checkbox of checkboxes) {
+        if (checkbox === this || checkbox === lastCheckbox) {
+          isInRange = !isInRange;
+        };
 
-      for (let input of checkboxesToCheck) {
-        input.checked = true;
-      }
+        if (isInRange) {
+          checkbox.checked = true;
+        };
+      };
     };
-    lastCheckboxId = checkboxId;
+    lastCheckbox = this;
   };
+
 </script>
 </body>
 </html>
