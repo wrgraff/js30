@@ -8,11 +8,13 @@
 
   <script>
     // start with strings, numbers and booleans
+    // ugh...
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
+    // boring! =(
 
     // You might think we can just do something like this:
 
@@ -25,14 +27,26 @@
     // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
     // So, how do we fix this? We take a copy instead!
+    const players2 = players.slice();
+    players2[3] = 'Idiot';
+    console.log('original array:', players)
+    console.log('array 2:', players2)
 
     // one way
 
     // or create a new array and concat the old one in
+    const players3 = [].concat(players);
 
     // or use the new ES6 Spread
+    const players4 = [...players];
 
     // now when we update it, the original one isn't changed
+    players3[1] = '...';
+    players4[1] = '!!!';
+
+    console.log('array 3:', players3)
+    console.log('array 4:', players4)
+    console.log('original array:', players)
 
     // The same thing goes for objects, let's say we have a person object
 
@@ -43,12 +57,45 @@
     };
 
     // and think we make a copy:
+    // i know it's not, so...
 
     // how do we take a copy instead?
+    const person2 = Object.assign({}, person, { num: 99, age: 11 });
+    console.log('original object:', person)
+    console.log('object 2:', person2)
 
     // We will hopefully soon see the object ...spread
+    const person3 = {...person};
+    console.log('object 2:', person3);
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    const man = {
+      name: 'Pete',
+      age: 80,
+      social: {
+        twitter: '@idiot',
+        facebook: '@idiot',
+        vk: '@idiot'
+      }
+    };
+
+    const man2 = Object.assign({}, man);
+    const man3 = {...man};
+    const man4 = JSON.parse(JSON.stringify(man));
+
+    man2.social.twitter = '@megaman';
+    console.log('original man:', man);
+    console.log('man 2:', man2);
+
+    man3.social.facebook = '@megaman';
+    console.log('original man:', man);
+    console.log('man 3:', man3);
+
+    man4.social.vk = '@megaman';
+    console.log('original man:', man);
+    console.log('man 4:', man4);
+
+
 
   </script>
 
