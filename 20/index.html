@@ -12,7 +12,34 @@
 <script>
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
 
+  let p = document.createElement('p');
+  const words = document.querySelector('.words');
+  words.appendChild(p);
+
+  recognition.addEventListener('result', evt => {
+    const transcript = Array.from(evt.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('');
+
+    p.textContent = transcript;
+
+    if (evt.results[0].isFinal) {
+      p = document.createElement('p');
+      words.appendChild(p);
+    }
+
+    if (transcript.includes('узнать погоду')) {
+      console.log('Я тебе что, Сири???')
+    }
+  });
+
+  recognition.addEventListener('end', recognition.start);
+
+  recognition.start();
 </script>
 
 
