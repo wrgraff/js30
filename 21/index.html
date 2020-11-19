@@ -64,8 +64,12 @@
 
     navigator.geolocation.watchPosition(data => {
       console.log(data)
+      arrow.style.transform = `rotate(${data.coords.heading})`;
       speed.textContent = Math.round(data.coords.speed);
-    })
+    }, err => {
+      console.log(err);
+      alert('Allow geolocate to use it');
+    });
   </script>
 </body>
 </html>
