@@ -42,7 +42,19 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
 
+  for (let div of divs) {
+    div.addEventListener('click', logText, {
+      capture: false,
+      once: true 
+    });
+  }
+
+  function logText(evt) {
+    // evt.stopPropagation();
+    console.log(this.classList.value)
+  }
 </script>
 </body>
 </html>
